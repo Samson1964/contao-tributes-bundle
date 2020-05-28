@@ -1,0 +1,16 @@
+<div class="ce_tributeslists ce_table block">
+	<?php if ($this->headline): ?>
+		<<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+	<?php endif; ?> 
+	<table class="tributeslist">
+		<tbody>
+		<?php foreach($this->item as $item): ?>
+			<tr class="">
+				<?php if ($this->view_year): ?><td><?= $item['year'] ?></td><?php endif; ?>
+				<td><?= $item['name'] ?></td>
+				<?php if ($this->view_info): ?><td style="white-space:normal;"><?= $item['info'] ?></td><?php endif; ?>
+			</tr>
+		<?php endforeach; ?>
+		<tbody>
+	</table>
+</div>
