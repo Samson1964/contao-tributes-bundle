@@ -14,7 +14,7 @@
 /**
  * Backend-Module
  */
-$GLOBALS['BE_MOD']['dsb']['tributes'] = array
+$GLOBALS['BE_MOD']['content']['tributes'] = array
 (
 	'tables'         => array('tl_tributes', 'tl_tributes_items'),
 	'icon'           => 'bundles/contaotributes/images/icon.gif',
@@ -25,4 +25,4 @@ $GLOBALS['BE_MOD']['dsb']['tributes'] = array
  * CONTENT ELEMENTS
  * -------------------------------------------------------------------------
  */
-$GLOBALS['TL_CTE']['dsb']['tributeslist'] = 'Schachbulle\ContaoTributesBundle\Classes\Liste';
+$GLOBALS['TL_CTE']['includes']['tributeslist'] = 'Schachbulle\ContaoTributesBundle\Classes\Liste';

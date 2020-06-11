@@ -1,5 +1,10 @@
 # Ehrungen Changelog
 
+## Version 1.0.2 (2020-06-11)
+
+* Fix: BE-Bereich dsb -> content
+* Fix: Inhaltselemente-Bereich dsb -> includes
+
 ## Version 1.0.1 (2020-06-09)
 
 * Fix ehrungen.php
