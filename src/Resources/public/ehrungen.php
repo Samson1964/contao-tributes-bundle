@@ -26,8 +26,8 @@ use Contao\Controller;
  * Initialize the system
  */
 define('TL_MODE', 'FE');
-define('TL_SCRIPT', 'bundles/contaotributes/ehrungen.php'); 
-require($_SERVER['DOCUMENT_ROOT'].'/../system/initialize.php'); 
+define('TL_SCRIPT', 'bundles/contaotributes/ehrungen.php');
+require($_SERVER['DOCUMENT_ROOT'].'/../system/initialize.php');
 
 /**
  * Class BannerClicks
@@ -37,7 +37,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/../system/initialize.php');
  * @author     Glen Langer
  * @package    Banner
  */
-class Ehrungsliste 
+class Ehrungsliste
 {
 	public function run()
 	{
@@ -62,7 +62,7 @@ class Ehrungsliste
 		$listenArr = array();
 		$objEhrungslisten = \Database::getInstance()->prepare("SELECT * FROM tl_tributes WHERE published = ?")
 		                                            ->execute(1);
-		if($objEhrungslisten->numRows) 
+		if($objEhrungslisten->numRows)
 		{
 			while($objEhrungslisten->next())
 			{
@@ -75,15 +75,16 @@ class Ehrungsliste
 		                                       ->execute(1, 0);
 
 		$birthdayArr = array(); // Array für die Personen mit Geburtstagen
+		$sonderliste = array(); // Array für SMS-Benachrichtigung
 
-		if($objEhrungen->numRows) 
+		if($objEhrungen->numRows)
 		{
 			while($objEhrungen->next())
 			{
 				// Eintrag aus Spielerregister laden
 				$objPlayer = \Database::getInstance()->prepare("SELECT * FROM tl_spielerregister WHERE id = ? AND death != ?")
 				                                     ->execute($objEhrungen->spielerregister_id, 1);
-				
+
 				$debugausgabe .= "<br>" . $objPlayer->surname1;
 				$geburtstag = substr($objPlayer->birthday,4,4);
 				$debugausgabe .= "<br>* " . $geburtstag;
@@ -112,6 +113,10 @@ class Ehrungsliste
 							'ehrung'     => $listenArr[$objEhrungen->pid],
 							'jahr'       => $objEhrungen->year,
 						);
+						if($listenArr[$objEhrungen->pid] == 'Goldene Ehrennadel des DSB' || $listenArr[$objEhrungen->pid] == 'Ehrenmitglieder des DSB')
+						{
+							$sonderliste[] = $zieltext[$x].' '.$alter.': '.$sname;
+						}
 					}
 				}
 			}
@@ -120,6 +125,7 @@ class Ehrungsliste
 		print_r($birthdayArr);
 		echo '</pre>';
 		//echo $debugausgabe;
+
 		for($x=0;$x<=3;$x++)
 		{
 			$content[$x] = '';
@@ -142,28 +148,56 @@ class Ehrungsliste
 				}
 			}
 		}
-		
+
 		echo '<pre>';
+		print_r($sonderliste);
 		print_r($content);
 		echo '</pre>';
+
 		if($content && $birthdayArr)
 		{
 			$data = '<p>Folgende Geburtstage von geehrten Personen stehen an:</p>' . $content[0].$content[1].$content[2].$content[3];
 			$data .= '<p><i>DIESE E-MAIL WURDE AUTOMATISCH GENERIERT!</i></p>';
 			// Email versenden, wenn Ehrungen anstehen
 			$objEmail = new \Email();
-			$objEmail->from = 'webmaster@schachbund.de';
-			$objEmail->fromName = 'DSB-Geburtstage';
-			$objEmail->subject = '[DSB-Webinfo] Geburtstage aus Ehrungslisten';
+			$objEmail->from = $GLOBALS['TL_CONFIG']['tributes_fromMail'];
+			$objEmail->fromName = $GLOBALS['TL_CONFIG']['tributes_fromName'];
+			$objEmail->subject = $GLOBALS['TL_CONFIG']['tributes_subject'];
 			$objEmail->html = $data;
-			$objEmail->sendCc(array
-			(
-				'Ullrich Krause <praesident@schachbund.de>',
-				'Uwe Bönsch <sportdirektor@schachbund.de>',
-				'DSB-Presse <presse@schachbund.de>'
-			)); 
-			$objEmail->sendTo(array('Frank Hoppe <webmaster@schachbund.de>')); 
+
+			// To und CC zusammenbauen
+			$to = array();
+			$cc = array();
+			$adressen = unserialize($GLOBALS['TL_CONFIG']['tributes_empfaenger']);
+			for($x = 0; $x < count($adressen); $x++)
+			{
+				if($x == 0) $to[] = $adressen[$x]['name'].' <'.$adressen[$x]['email'].'>';
+				else $cc[] = $adressen[$x]['name'].' <'.$adressen[$x]['email'].'>';
+			}
+
+			$objEmail->sendCc($cc);
+			$objEmail->sendTo($to);
 		}
+
+		// Goldene Ehrennadeln und Ehrenmitglieder nochmal per SMS schicken
+		if($sonderliste)
+		{
+			$ausgabe = implode("\r\n", array_unique($sonderliste));
+
+			$adressen = unserialize($GLOBALS['TL_CONFIG']['tributes_sms77_to']);
+			$fromName = $GLOBALS['TL_CONFIG']['tributes_sms77_fromName'];
+
+			for($x = 0; $x < count($adressen); $x++)
+			{
+				$objEmail = new \Email();
+				$objEmail->from = $GLOBALS['TL_CONFIG']['tributes_sms77_fromMail'];
+				////$objEmail->fromName = $GLOBALS['TL_CONFIG']['tributes_fromName'];
+				$objEmail->subject = 'from='.$fromName.' key='.$adressen[$x]['key'];
+				$objEmail->text = $ausgabe;
+				$objEmail->sendTo(array($adressen[$x]['email']));
+			}
+		}
+
 	}
 }
 

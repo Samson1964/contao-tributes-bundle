@@ -1,5 +1,11 @@
 # Ehrungen Changelog
 
+## Version 1.1.0 (2021-02-25)
+
+* Add: Abhängigkeit menatwork/contao-multicolumnwizard-bundle
+* Change: Hardcodierte Adressen aus ehrungen.php in Systemeinstellungen verschoben
+* Add: Unterstützung für den Dienst SMS77, Optionen unter Systemeinstellungen
+
 ## Version 1.0.2 (2020-06-11)
 
 * Fix: BE-Bereich dsb -> content
