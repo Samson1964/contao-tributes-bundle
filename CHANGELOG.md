@@ -1,5 +1,10 @@
 # Ehrungen Changelog
 
+## Version 1.1.1 (2021-08-11)
+
+* Change: tl_tributes_items - pagePicker durch dcaPicker ersetzt
+* Fix: tl_tributes_items.spielerregister_id - includeBlankOption auf true und submitOnChange auf false gesetzt
+
 ## Version 1.1.0 (2021-02-25)
 
 * Add: Abhängigkeit menatwork/contao-multicolumnwizard-bundle

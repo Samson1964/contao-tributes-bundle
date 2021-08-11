@@ -155,12 +155,8 @@ $GLOBALS['TL_DCA']['tl_tributes_items'] = array
 				'decodeEntities'      => true,
 				'maxlength'           => 255,
 				'fieldType'           => 'radio',
-				//'dcaPicker'           => true,
+				'dcaPicker'           => true,
 				'tl_class'            => 'clr w50 wizard'
-			),
-			'wizard' => array
-			(
-				array('tl_tributes_items', 'pagePicker')
 			),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
@@ -210,7 +206,8 @@ $GLOBALS['TL_DCA']['tl_tributes_items'] = array
 				'mandatory'           => false, 
 				'multiple'            => false, 
 				'chosen'              => true,
-				'submitOnChange'      => true,
+				'submitOnChange'      => false,
+				'includeBlankOption'  => true,
 				'tl_class'            => 'long'
 			),
 			'sql'                     => "int(10) unsigned NOT NULL default '0'" 
