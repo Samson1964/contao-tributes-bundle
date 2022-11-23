@@ -8,7 +8,16 @@
 			<tr class="">
 				<?php if ($this->view_year): ?><td><?= $item['year'] ?></td><?php endif; ?>
 				<td><?= $item['name'] ?></td>
-				<?php if ($this->view_info): ?><td style="white-space:normal;"><?= $item['info'] ?></td><?php endif; ?>
+				<?php if($this->view_info): ?>
+					<td style="white-space:normal;">
+						<?php if($item['url']): ?>
+							<a href="<?= $item['url'] ?>" <?php if($item['target']): ?>target="_blank"<?php endif; ?>>Bericht</a>
+						<?php endif; ?>
+						<?php if($this->view_info): ?>
+							<?= $item['info'] ?>
+						<?php endif; ?>
+					</td>
+				<?php endif; ?>
 			</tr>
 		<?php endforeach; ?>
 		<tbody>

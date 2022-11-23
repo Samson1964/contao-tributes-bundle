@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['tributeslist'] = array
 		'multiple'       => false, 
 		'chosen'         => true,
 		'submitOnChange' => true,
-		'tl_class'       => 'long wizard'
+		'tl_class'       => 'long widget'
 	),
 	'wizard'               => array
 	(

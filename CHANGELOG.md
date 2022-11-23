@@ -1,5 +1,9 @@
 # Ehrungen Changelog
 
+## Version 1.1.2 (2022-11-23)
+
+* Fix: Verlinkung funktioniert nicht richtig im Frontend -> Spielerregister wird verlinkt, aber nicht wenn eine zusätzliche URL hinzugefügt wird -> Ausgabe im Template hat gefehlt
+
 ## Version 1.1.1 (2021-08-11)
 
 * Change: tl_tributes_items - pagePicker durch dcaPicker ersetzt
