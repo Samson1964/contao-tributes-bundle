@@ -15,27 +15,27 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['tributeslist'] = array
 (
 	'label'                => &$GLOBALS['TL_LANG']['tl_content']['tributeslist'],
 	'exclude'              => true,
-	'options_callback'     => array('tl_content_tributeslist', 'getTributeslists'),
 	'inputType'            => 'select',
+	'options_callback'     => array('tl_content_tributeslist', 'getTributeslists'),
 	'eval'                 => array
 	(
-		'mandatory'      => false, 
-		'multiple'       => false, 
+		'mandatory'      => false,
+		'multiple'       => false,
 		'chosen'         => true,
 		'submitOnChange' => true,
-		'tl_class'       => 'long widget'
+		'tl_class'       => 'w50 wizard widget',
 	),
 	'wizard'               => array
 	(
-		array('tl_content_championslist', 'editListe')
+		array('tl_content_tributeslist', 'editListe')
 	),
-	'sql'                  => "int(10) unsigned NOT NULL default '0'" 
+	'sql'                  => "int(10) unsigned NOT NULL default '0'"
 );
 
 /*****************************************
  * Klasse tl_content_tributeslist
  *****************************************/
- 
+
 class tl_content_tributeslist extends \Backend
 {
 
@@ -55,9 +55,9 @@ class tl_content_tributeslist extends \Backend
 	 */
 	public function editListe(DataContainer $dc)
 	{
-		return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=tributes&amp;table=tl_tributes_items&amp;id=' . $dc->value . '&amp;popup=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(specialchars($GLOBALS['TL_LANG']['tl_content']['editalias'][1]), $dc->value) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':765,\'title\':\'' . specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editalias'][1], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.gif', $GLOBALS['TL_LANG']['tl_content']['editalias'][0], 'style="vertical-align:top"') . '</a>';
-	} 
-	
+		return ($dc->value < 1) ? '' : ' <a href="contao/main.php?do=tributes&amp;table=tl_tributes_items&amp;id=' . $dc->value . '&amp;popup=1&amp;nb=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(specialchars($GLOBALS['TL_LANG']['tl_content']['editalias']), $dc->value) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':768,\'title\':\'' . specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editalias'], $dc->value))) . '\',\'url\':this.href});return false">' . Image::getHtml('alias.gif', $GLOBALS['TL_LANG']['tl_content']['editalias'], 'style="vertical-align:middle"') . '</a>';
+	}
+
 	public function getTributeslists(DataContainer $dc)
 	{
 		$array = array();
@@ -71,5 +71,3 @@ class tl_content_tributeslist extends \Backend
 	}
 
 }
-
-?>

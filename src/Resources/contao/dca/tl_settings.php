@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php
 
 /**
  * Contao Open Source CMS
@@ -14,11 +14,16 @@
 /**
  * palettes
  */
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{tributes_legend:hide},tributes_fromName,tributes_fromMail,tributes_subject,tributes_empfaenger,tributes_sms77_fromName,tributes_sms77_fromMail,tributes_sms77_to,tributes_sms77_key';
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] .= ';{tributes_legend:hide},tributes_anleitung,tributes_fromName,tributes_fromMail,tributes_subject,tributes_empfaenger,tributes_sms77_fromName,tributes_sms77_fromMail,tributes_sms77_to,tributes_sms77_key';
 
 /**
  * fields
  */
+
+$GLOBALS['TL_DCA']['tl_settings']['fields']['tributes_anleitung'] = array
+(
+	'input_field_callback'    => array('tl_settings_tributes', 'getAnleitung')
+);
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['tributes_fromName'] = array
 (
@@ -80,6 +85,17 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['tributes_empfaenger'] = array
 				'label'                 => &$GLOBALS['TL_LANG']['tl_settings']['tributes_empfaenger_email'],
 				'exclude'               => true,
 				'inputType'             => 'text',
+				'eval'                  => array
+				(
+					'style'             => 'width:90%',
+					'valign'            => 'middle'
+				),
+			),
+			'aktiv' => array
+			(
+				'label'                 => &$GLOBALS['TL_LANG']['tl_settings']['tributes_empfaenger_aktiv'],
+				'exclude'               => true,
+				'inputType'             => 'checkbox',
 				'eval'                  => array
 				(
 					'style'             => 'width:90%',
@@ -150,3 +166,20 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['tributes_sms77_to'] = array
 	),
 	'sql'                   => "blob NULL"
 );
+
+class tl_settings_tributes extends \Backend
+{
+	public function getAnleitung(DataContainer $dc)
+	{
+
+		$string = '
+<div class="widget long">
+  <h3 style="margin-bottom:10px;"><label for="ctrl_anleitung">'.$GLOBALS['TL_LANG']['tl_settings']['tributes_anleitungKopf'][0].'</label></h3>
+  <p>'.$GLOBALS['TL_LANG']['tl_settings']['tributes_anleitungText'].'</p>
+  <p class="tl_help tl_tip" title="">'.$GLOBALS['TL_LANG']['tl_settings']['tributes_anleitungKopf'][1].'</p>
+</div>';
+
+		return $string;
+	}
+
+}

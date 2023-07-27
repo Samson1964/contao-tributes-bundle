@@ -1,5 +1,14 @@
 # Ehrungen Changelog
 
+## Version 1.1.3 (2023-07-27)
+
+* Fix: tl_content Funktion editListe -> falsche Verlinkung, Button mittig gesetzt
+* Add: codefog/contao-haste in composer.json
+* Add: tl_tributes Toggle-Funktion Haste eingebaut
+* Change: tl_tributes_items Toggle-Funktion durch Haste-Toggler ersetzt
+* Add: tl_settings.tributes_anleitung -> Kurze Anleitung, wie Personen in diese E-Mail hineinkommen.
+* Add: tl_settings.tributes_empfaenger.aktiv um Empfänger der Geburtstagsmail (de)aktivieren zu können
+
 ## Version 1.1.2 (2022-11-23)
 
 * Fix: Verlinkung funktioniert nicht richtig im Frontend -> Spielerregister wird verlinkt, aber nicht wenn eine zusätzliche URL hinzugefügt wird -> Ausgabe im Template hat gefehlt

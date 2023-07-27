@@ -171,8 +171,11 @@ class Ehrungsliste
 			$adressen = unserialize($GLOBALS['TL_CONFIG']['tributes_empfaenger']);
 			for($x = 0; $x < count($adressen); $x++)
 			{
-				if($x == 0) $to[] = $adressen[$x]['name'].' <'.$adressen[$x]['email'].'>';
-				else $cc[] = $adressen[$x]['name'].' <'.$adressen[$x]['email'].'>';
+				if($adressen[$x]['aktiv']) // Nur aktive Empfänger berücksichtigen
+				{
+					if($x == 0) $to[] = $adressen[$x]['name'].' <'.$adressen[$x]['email'].'>';
+					else $cc[] = $adressen[$x]['name'].' <'.$adressen[$x]['email'].'>';
+				}
 			}
 
 			$objEmail->sendCc($cc);
