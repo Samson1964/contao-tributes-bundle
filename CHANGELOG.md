@@ -1,5 +1,9 @@
 # Ehrungen Changelog
 
+## Version 2.0.0 (2025-09-09)
+
+* Add: Abhängigkeit PHP 8
+
 ## Version 1.1.3 (2023-07-27)
 
 * Fix: tl_content Funktion editListe -> falsche Verlinkung, Button mittig gesetzt
